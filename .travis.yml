@@ -1,0 +1,20 @@
+language: node_js
+addons:
+  sonarcloud:
+    organization: loopingz-github
+node_js:
+- '10'
+before_install:
+- pip install --user awscli
+script: npm run test
+after_success:
+- sonar-scanner
+deploy:
+  provider: npm
+  email: rcattiau@loopingz.com
+  skip_cleanup: true
+  tag: next
+  on:
+    tags: true
+  api_key:
+    secure: NVGvA5AQ8j3OLtUsupYtrEXcGi3WGasl0nMk7jSBj3waFqfjoqM3F/VF4uV8D5xjGCo/cGNk+16nxVmTR8eqE3uG4npaBVNPYNH9FiFnlbjL2W1MdWeH4+IfMUdtDB+1r8t10CWBxn15b1voWQgA6hjLSzmUBhLxgvqY2goKi2+ReC/zEeL1HEo41TCKHE2+MAsP70V6xGeN7Xoe0UcOCvYqv7rJO/puEmHwRRQ6ddb/FFcFpNPLCtk7kia/qsNqT9FCO4/neDrmPCIM/qqc/VkJY4ppP6sh201h5PLoN48MnpuIvp2PtccS46vlbjcHp0YhBL9Tzb5cDYJX1eO35JEKFBoZZDovrPuINajZNfAJKi8vyX1Ag6cyGpgJ3ogxlpZcTLAiUybOnJZGzsrfTyK7a5UQAqG+Ui52+JipJk5rDAMadBpQ9q+6T06nYME6HuFmSqUsz+wvc04dHKEX4OKNpd29NgQ06KoRrv0PbiR2bd69XuOKTXv6XBI2u+nAeY4tbcCv38SEl64dCsvQ6KDsYsX+fItlMkfFlWXZnAQFh265lffxEBZ9DeRZB1hd+bjQgnPb5XrMPdh1MZk5UoBxyFCJeN+E244XPO7g8a1G2BIEvw06S5NdMh2wJVLR0mimDttEhBMUCqH0qko6iQHoZHn66Lt63hYrIuTn534=
