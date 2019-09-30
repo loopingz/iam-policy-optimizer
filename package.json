@@ -1,0 +1,41 @@
+{
+  "name": "iam-policy-optimizer",
+  "version": "1.0.0",
+  "description": "Reduce AWS IAM policy to the smaller form",
+  "main": "lib/index.js",
+  "repository": "https://github.com/loopingz/iam-policy-optimizer",
+  "author": "Remi Cattiau <remi@cattiau.com>",
+  "license": "MIT",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "nyc mocha --recursive --exit --timeout=100000 -r ts-node/register src/**/*.spec.ts",
+    "editor-start": "yarn --cwd editor/ start",
+    "editor-build": "yarn --cwd editor/ build",
+    "release": "standard-version"
+  },
+  "nyc": {
+    "extends": "@istanbuljs/nyc-config-typescript",
+    "report-dir": "./reports",
+    "reporter": [
+      "html",
+      "lcov",
+      "json"
+    ]
+  },
+  "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^0.1.3",
+    "mocha": "^6.2.0",
+    "mocha-typescript": "^1.1.17",
+    "nyc": "^14.1.1",
+    "rimraf": "^3.0.0",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "@types/node": "^12.7.8",
+    "aws-sdk": "^2.538.0",
+    "yargs": "^14.0.0"
+  }
+}
