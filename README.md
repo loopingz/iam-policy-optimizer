@@ -2,6 +2,34 @@
 
 As AWS IAM Policy are limit in size to 6,144 characters (https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_iam-limits.html) the optimizer is trying to reduce to the minimal amount of characters any policy
 
+## Usage
+
+Display the optimized policy
+```
+iam-policy-optimizer --pretend --arn policyArn
+```
+
+### Get policy from
+
+File:
+
+```
+iam-policy-optimizer file.json
+```
+
+Stdin:
+
+```
+iam-policy-optimizer -
+```
+
+AWS:
+
+```
+iam-policy-optimizer --arn --save
+```
+The option --save will auto-save in AWS if the new version is optimizable
+
 ## Example
 
 The policy (3517 characters is reduced to 1407 characters)

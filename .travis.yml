@@ -3,12 +3,10 @@ addons:
   sonarcloud:
     organization: loopingz-github
 node_js:
-- '10'
-before_install:
-- pip install --user awscli
+  - "10"
 script: npm run test
 after_success:
-- sonar-scanner
+  - sonar-scanner
 deploy:
   provider: npm
   email: rcattiau@loopingz.com

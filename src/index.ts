@@ -7,9 +7,6 @@ export default class IamPolicyOptimizer {
   static optimizeResource(arg: string[]) {
     // First remove any duplicate
     let res = [...new Set(arg)];
-    let wildcards = res
-      .filter(p => p.endsWith("*"))
-      .map(p => p.substr(0, p.length - 2));
     let toRemove = [];
     res.forEach(p => {
       if (!p.endsWith("*")) return;
