@@ -53,7 +53,11 @@
         "dynamodb:Scan",
         "dynamodb:UpdateItem"
       ],
-      "Resource": "arn:aws:dynamodb:us-east-1:666:table/dev-cves-status|arn:aws:dynamodb:us-east-1:666:table/dev-table*|arn:aws:dynamodb:us-east-1:666:table/table4"
+      "Resource": [
+        "arn:aws:dynamodb:us-east-1:666:table/dev-cves-status",
+        "arn:aws:dynamodb:us-east-1:666:table/dev-table*",
+        "arn:aws:dynamodb:us-east-1:666:table/table4"
+      ]
     },
     {
       "Sid": "4",
@@ -70,7 +74,7 @@
     {
       "Sid": "5",
       "Effect": "Allow",
-      "Action": ["sts:AssumeRole"],
+      "Action": "sts:AssumeRole",
       "Resource": "arn:aws:iam::*:role/my-role"
     }
   ]

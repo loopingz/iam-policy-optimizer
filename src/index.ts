@@ -59,11 +59,20 @@ export default class IamPolicyOptimizer {
       });
       // Add to new policy
       for (let i in newMap) {
+        // Remove array if only one item
+        let Action: any = newMap[i];
+        let Resource: any = i.split("|");
+        if (Resource.length === 1) {
+          Resource = Resource[0];
+        }
+        if (Action.length === 1) {
+          Action = Action[0];
+        }
         newPolicy.Statement.push({
           Sid: (sids++).toString(36),
           Effect,
-          Action: newMap[i],
-          Resource: i
+          Action,
+          Resource
         });
       }
     });

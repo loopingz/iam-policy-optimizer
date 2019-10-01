@@ -5,6 +5,7 @@ As AWS IAM Policy are limit in size to 6,144 characters (https://docs.aws.amazon
 ## Usage
 
 Display the optimized policy
+
 ```
 iam-policy-optimizer --pretend --arn policyArn
 ```
@@ -28,6 +29,7 @@ AWS:
 ```
 iam-policy-optimizer --arn --save
 ```
+
 The option --save will auto-save in AWS if the new version is optimizable
 
 ## Example
@@ -230,6 +232,7 @@ The policy (3517 characters is reduced to 1407 characters)
   ]
 }
 ```
+
 is transformed to
 
 ```
@@ -260,7 +263,9 @@ is transformed to
         "s3:PutObjectAcl",
         "s3:RestoreObject"
       ],
-      "Resource": "*"
+      "Resource": [
+        "*"
+      ]
     },
     {
       "Sid": "2",
@@ -271,7 +276,9 @@ is transformed to
         "logs:CreateLogStream",
         "logs:PutLogEvents"
       ],
-      "Resource": "arn:aws:logs:us-east-1:666:*"
+      "Resource": [
+        "arn:aws:logs:us-east-1:666:*"
+      ]
     },
     {
       "Sid": "3",
@@ -288,7 +295,11 @@ is transformed to
         "dynamodb:Scan",
         "dynamodb:UpdateItem"
       ],
-      "Resource": "arn:aws:dynamodb:us-east-1:666:table/dev-cves-status|arn:aws:dynamodb:us-east-1:666:table/dev-table*|arn:aws:dynamodb:us-east-1:666:table/table4"
+      "Resource": [
+        "arn:aws:dynamodb:us-east-1:666:table/dev-cves-status",
+        "arn:aws:dynamodb:us-east-1:666:table/dev-table*",
+        "arn:aws:dynamodb:us-east-1:666:table/table4"
+      ]
     },
     {
       "Sid": "4",
@@ -300,15 +311,20 @@ is transformed to
         "sqs:SendMessage",
         "sqs:SendMessageBatch"
       ],
-      "Resource": "arn:aws:sqs:us-east-1:666:dev-nxsec-tasks-queue"
+      "Resource": [
+        "arn:aws:sqs:us-east-1:666:dev-nxsec-tasks-queue"
+      ]
     },
     {
       "Sid": "5",
       "Effect": "Allow",
-      "Action": ["sts:AssumeRole"],
-      "Resource": "arn:aws:iam::*:role/my-role"
+      "Action": [
+        "sts:AssumeRole"
+      ],
+      "Resource": [
+        "arn:aws:iam::*:role/my-role"
+      ]
     }
   ]
 }
-
 ```
