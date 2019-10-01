@@ -28,7 +28,11 @@ export default class IamPolicyOptimizer {
     };
     let commands = { Allow: {}, Deny: {} };
     // Decompose for each action
+    // Action wildcard might still be optimized
     policy.Statement.forEach(st => {
+      if (typeof st.Action === "string") {
+        st.Action = [st.Action];
+      }
       st.Action.forEach(action => {
         commands[st.Effect][action] = commands[st.Effect][action] || [];
         if (typeof st.Resource === "string") {
