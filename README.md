@@ -7,7 +7,7 @@ As AWS IAM Policy are limit in size to 6,144 characters (https://docs.aws.amazon
 Display the optimized policy
 
 ```
-iam-policy-optimizer --pretend --arn policyArn
+iam-policy-optimizer --arn policyArn
 ```
 
 ### Get policy from
