@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.2](https://github.com/loopingz/iam-policy-optimizer/compare/v1.1.1...v1.1.2) (2019-10-06)
+
+
+### Bug Fixes
+
+* add the interpreter ([58615ff](https://github.com/loopingz/iam-policy-optimizer/commit/58615ff))
+
 ### [1.1.1](https://github.com/loopingz/iam-policy-optimizer/compare/v1.1.0...v1.1.1) (2019-10-06)
 
 ## 1.1.0 (2019-10-06)
