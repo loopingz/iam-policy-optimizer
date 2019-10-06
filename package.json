@@ -10,6 +10,8 @@
     "lib"
   ],
   "scripts": {
+    "build": "tsc",
+    "pretest": "tsc",
     "test": "nyc mocha --recursive --exit --timeout=100000 -r ts-node/register src/**/*.spec.ts",
     "editor-start": "yarn --cwd editor/ start",
     "editor-build": "yarn --cwd editor/ build",
