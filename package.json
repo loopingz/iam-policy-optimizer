@@ -6,6 +6,9 @@
   "repository": "https://github.com/loopingz/iam-policy-optimizer",
   "author": "Remi Cattiau <remi@cattiau.com>",
   "license": "MIT",
+  "bin": {
+    "iam-policy-optimizer": "./lib/index.js"
+  },
   "files": [
     "lib"
   ],
