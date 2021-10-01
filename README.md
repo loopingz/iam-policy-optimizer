@@ -7,7 +7,7 @@ As AWS IAM Policy are limit in size to 6,144 characters (https://docs.aws.amazon
 Display the optimized policy
 
 ```shell
-iam-policy-optimizer --arn policyArn
+npx iam-policy-optimizer --arn policyArn
 ```
 
 ### Get policy from
@@ -15,19 +15,19 @@ iam-policy-optimizer --arn policyArn
 File:
 
 ```shell
-iam-policy-optimizer file.json
+npx iam-policy-optimizer file.json
 ```
 
 Stdin:
 
 ```shell
-iam-policy-optimizer -
+npx iam-policy-optimizer -
 ```
 
 AWS:
 
 ```shell
-iam-policy-optimizer --arn --save
+npx iam-policy-optimizer --arn --save
 ```
 
 The option --save will auto-save in AWS if the new version is optimizable
