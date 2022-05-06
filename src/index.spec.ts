@@ -150,7 +150,7 @@ class IamPolicyOptimizerTest {
   @test
   async iamPolicy() {
     const original = console.log;
-    IamPolicyOptimizer.IAMEndpoint = "http://localhost:4593";
+    IamPolicyOptimizer.IAMEndpoint = "http://localhost:4566";
     process.env.AWS_DEFAULT_REGION = "us-east-1";
     process.env.AWS_ACCESS_KEY_ID = "localstack";
     process.env.AWS_SECRET_ACCESS_KEY = "localstack";
