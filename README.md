@@ -1,5 +1,10 @@
 # IAM Policy Optimizer
 
+[![codecov](https://codecov.io/gh/loopingz/iam-policy-optimizer/branch/master/graph/badge.svg?token=INUZQNLM53)](https://codecov.io/gh/loopingz/iam-policy-optimizer)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=iam-policy-optimizer&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=iam-policy-optimizer)
+[![CI](https://github.com/loopingz/iam-policy-optimizer/actions/workflows/ci.yml/badge.svg)](https://github.com/loopingz/iam-policy-optimizer/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/loopingz/iam-policy-optimizer/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/loopingz/iam-policy-optimizer/actions/workflows/codeql-analysis.yml)
+
 As AWS IAM Policy are limit in size to 6,144 characters (https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_iam-limits.html) the optimizer is trying to reduce to the minimal amount of characters any policy
 
 ## Usage
