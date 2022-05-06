@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import * as fs from "fs";
-import * as AWS from "aws-sdk";
+import { IAMClient, GetPolicyCommand, GetPolicyVersionCommand, CreatePolicyVersionCommand } from "@aws-sdk/client-iam";
 
 export default class IamPolicyOptimizer {
   static POLICY_LIMIT = 6144;
@@ -113,20 +113,19 @@ export default class IamPolicyOptimizer {
     const argv = IamPolicyOptimizer.getArgv();
     // IAM
     if (argv.arn) {
-      let iam = new AWS.IAM({
+      let iam = new IAMClient({
         endpoint: IamPolicyOptimizer.IAMEndpoint,
         region: "us-east-1"
       });
       try {
-        let { Policy } = await iam.getPolicy({ PolicyArn: argv.arn }).promise();
+        let { Policy } = await iam.send(new GetPolicyCommand({ PolicyArn: argv.arn }));
         let {
           PolicyVersion: { Document }
         } = await iam
-          .getPolicyVersion({
+          .send(new GetPolicyVersionCommand({
             PolicyArn: argv.arn,
             VersionId: Policy.DefaultVersionId
-          })
-          .promise();
+          }));
         let result = IamPolicyOptimizer.reduce(Document);
         if (argv.save) {
           // Update in IAM
@@ -134,12 +133,11 @@ export default class IamPolicyOptimizer {
             return;
           }
           await iam
-            .createPolicyVersion({
+            .send( new CreatePolicyVersionCommand({
               PolicyArn: argv.arn,
               PolicyDocument: result,
               SetAsDefault: true
-            })
-            .promise();
+            }));
           return;
         } else {
           console.log(result);

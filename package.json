@@ -40,8 +40,8 @@
     "typescript": "^4.4.3"
   },
   "dependencies": {
+    "@aws-sdk/client-iam": "^3.85.0",
     "@types/node": "^16.10.2",
-    "aws-sdk": "^2.538.0",
     "yargs": "^17.2.1"
   }
 }
