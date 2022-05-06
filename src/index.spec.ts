@@ -2,7 +2,7 @@ import { suite, test } from "mocha-typescript";
 import IamPolicyOptimizer from "./index";
 import * as fs from "fs";
 import * as assert from "assert";
-import * as AWS from "aws-sdk";
+import { IAMClient, GetPolicyCommand, CreatePolicyCommand, GetPolicyVersionCommand, CreatePolicyVersionCommand } from "@aws-sdk/client-iam";
 
 const GetArgv = IamPolicyOptimizer.getArgv;
 IamPolicyOptimizer.getArgv = () => {
@@ -154,7 +154,7 @@ class IamPolicyOptimizerTest {
     process.env.AWS_DEFAULT_REGION = "us-east-1";
     process.env.AWS_ACCESS_KEY_ID = "localstack";
     process.env.AWS_SECRET_ACCESS_KEY = "localstack";
-    let iam = new AWS.IAM({
+    let iam = new IAMClient({
       endpoint: IamPolicyOptimizer.IAMEndpoint,
       region: "us-east-1"
     });
@@ -163,11 +163,10 @@ class IamPolicyOptimizerTest {
       let {
         Policy: { Arn }
       } = await iam
-        .createPolicy({
+        .send(new CreatePolicyCommand({
           PolicyDocument: this.getSamplePolicy(),
           PolicyName: "TestPolicy"
-        })
-        .promise();
+        }));
       IamPolicyOptimizer.getArgv = () => {
         return {
           arn: Arn
@@ -179,7 +178,7 @@ class IamPolicyOptimizerTest {
       };
       await IamPolicyOptimizer.commandLine();
       this.comparePolicies(this.getSampleOptimizedPolicy(), result.trim());
-      let version = (await iam.getPolicy({ PolicyArn: Arn }).promise()).Policy
+      let version = (await iam.send(new GetPolicyCommand({ PolicyArn: Arn }))).Policy
         .DefaultVersionId;
       assert.equal(version, "v1");
       IamPolicyOptimizer.getArgv = () => {
@@ -189,11 +188,11 @@ class IamPolicyOptimizerTest {
         };
       };
       await IamPolicyOptimizer.commandLine();
-      version = (await iam.getPolicy({ PolicyArn: Arn }).promise()).Policy
+      version = (await iam.send(new GetPolicyCommand({ PolicyArn: Arn }))).Policy
         .DefaultVersionId;
       assert.equal(version, "v2");
       await IamPolicyOptimizer.commandLine();
-      version = (await iam.getPolicy({ PolicyArn: Arn }).promise()).Policy
+      version = (await iam.send(new GetPolicyCommand({ PolicyArn: Arn }))).Policy
         .DefaultVersionId;
       assert.equal(
         version,
