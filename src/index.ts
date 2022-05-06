@@ -181,6 +181,7 @@ export default class IamPolicyOptimizer {
 }
 
 // If called as main launch the CLI
+/* istanbul ignore next */
 if (require.main === module) {
   IamPolicyOptimizer.commandLine();
 }
