@@ -6,14 +6,21 @@ export default class IamPolicyOptimizer {
   static POLICY_LIMIT = 6144;
   static IAMEndpoint = undefined;
 
+  /**
+   * Reduce from a stringified policy version
+   *
+   * @param policy JSON stringified version of the policy
+   * @returns Optimized JSON stringified version of the policy
+   */
   static reduce(policy: string): string {
-    return JSON.stringify(
-      this.reducePolicyObject(JSON.parse(policy)),
-      undefined,
-      2
-    );
+    return JSON.stringify(this.reducePolicyObject(JSON.parse(policy)), undefined, 2);
   }
 
+  /**
+   * Optimize the resources array
+   *
+   * @internal
+   */
   static optimizeResource(arg: string[]) {
     // First remove any duplicate
     let res = [...new Set(arg)];
@@ -31,6 +38,11 @@ export default class IamPolicyOptimizer {
     return res.filter(p => toRemove.indexOf(p) < 0);
   }
 
+  /**
+   * Reduce the policy object to its minimal form
+   * @param policy
+   * @returns
+   */
   static reducePolicyObject(policy: any): any {
     let newPolicy = {
       Version: policy.Version,
@@ -56,9 +68,7 @@ export default class IamPolicyOptimizer {
     Object.keys(commands).forEach(Effect => {
       // Optimize resources per action
       for (let action in commands[Effect]) {
-        commands[Effect][action] = IamPolicyOptimizer.optimizeResource(
-          commands[Effect][action]
-        );
+        commands[Effect][action] = IamPolicyOptimizer.optimizeResource(commands[Effect][action]);
       }
       // Recompose
       let newMap = {};
@@ -88,15 +98,15 @@ export default class IamPolicyOptimizer {
     });
 
     if (JSON.stringify(newPolicy).length > IamPolicyOptimizer.POLICY_LIMIT) {
-      console.error(
-        "Reduced policy is still too big",
-        JSON.stringify(newPolicy).length
-      );
+      console.error("Reduced policy is still too big", JSON.stringify(newPolicy).length);
     }
 
     return newPolicy;
   }
 
+  /**
+   * Return the arguments for CLI
+   */
   static getArgv() {
     return require("yargs")
       .option("arn", {
@@ -109,6 +119,9 @@ export default class IamPolicyOptimizer {
       }).argv;
   }
 
+  /**
+   * Add command line management
+   */
   static async commandLine() {
     const argv = IamPolicyOptimizer.getArgv();
     // IAM
@@ -121,23 +134,25 @@ export default class IamPolicyOptimizer {
         let { Policy } = await iam.send(new GetPolicyCommand({ PolicyArn: argv.arn }));
         let {
           PolicyVersion: { Document }
-        } = await iam
-          .send(new GetPolicyVersionCommand({
+        } = await iam.send(
+          new GetPolicyVersionCommand({
             PolicyArn: argv.arn,
             VersionId: Policy.DefaultVersionId
-          }));
+          })
+        );
         let result = IamPolicyOptimizer.reduce(Document);
         if (argv.save) {
           // Update in IAM
           if (result.trim() === Document.trim()) {
             return;
           }
-          await iam
-            .send( new CreatePolicyVersionCommand({
+          await iam.send(
+            new CreatePolicyVersionCommand({
               PolicyArn: argv.arn,
               PolicyDocument: result,
               SetAsDefault: true
-            }));
+            })
+          );
           return;
         } else {
           console.log(result);
@@ -149,9 +164,7 @@ export default class IamPolicyOptimizer {
     } else {
       let file = argv._[0];
       if (!file) {
-        console.log(
-          "iam-policy-generator must use either --arn or a file argument"
-        );
+        console.log("iam-policy-generator must use either --arn or a file argument");
         return;
       }
       if (file === "-") {
@@ -167,6 +180,7 @@ export default class IamPolicyOptimizer {
   }
 }
 
+// If called as main launch the CLI
 if (require.main === module) {
   IamPolicyOptimizer.commandLine();
 }
