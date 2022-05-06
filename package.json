@@ -27,6 +27,9 @@
       "html",
       "lcov",
       "json"
+    ],
+    "exclude": [
+      "**/*.spec.ts"
     ]
   },
   "devDependencies": {

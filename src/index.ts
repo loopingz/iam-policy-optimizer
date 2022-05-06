@@ -27,7 +27,7 @@ export default class IamPolicyOptimizer {
     let toRemove = [];
     res.forEach(p => {
       if (!p.endsWith("*")) return;
-      let rep = p.substr(0, p.length - 2);
+      let rep = p.substring(0, p.length - 2);
       res.forEach(m => {
         if (m === p) return;
         if (m.startsWith(rep)) {
@@ -160,7 +160,6 @@ export default class IamPolicyOptimizer {
       } catch (err) {
         console.log("Error occured", err);
       }
-      return;
     } else {
       let file = argv._[0];
       if (!file) {
