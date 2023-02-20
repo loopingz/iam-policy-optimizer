@@ -1,6 +1,6 @@
 {
   "name": "iam-policy-optimizer",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Reduce AWS IAM policy to the smaller form",
   "main": "lib/index.js",
   "repository": "https://github.com/loopingz/iam-policy-optimizer",
